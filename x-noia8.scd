@@ -1,6 +1,6 @@
 (
 {
-	var synth, state_stream;
+    var synth, state_stream;
 
     Server.default.waitForBoot;
 
