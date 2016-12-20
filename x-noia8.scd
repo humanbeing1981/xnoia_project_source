@@ -1,13 +1,13 @@
 (
 {
-	var synth, state_stream;
+	var synth, state_stream, word, angle, addr;
 
     Server.default.waitForBoot;
 
-    "/home/alex/Desktop/synths_file.scd".loadPaths;
+    "/home/alex/Documents/xnoia_project/synths_file.scd".loadPaths;
     1.wait;
 
-    state_stream = Pseq([\omonoia, \pronoia, \epinoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia,\anoia, \oxynoia, \symponoia] 
+    state_stream = Pseq([\omonoia, \pronoia, \epinoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia,\anoia, \oxynoia, \symponoia]
         collect: { | s, i | [s, i] }, inf).asStream;
 
     OSCdef.new(
@@ -19,8 +19,8 @@
 
             if (msg[3] > 200)
 			{
-                var word, angle, addr;
-                #word, angle = r.next;
+
+                #word, angle = state_stream.next;
                 addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
                 synth.release;
                 synth = Synth (word);
