@@ -1,6 +1,10 @@
 (
 {
+<<<<<<< HEAD
 	var synth, state_stream, word, angle, addr;
+=======
+    var synth, state_stream;
+>>>>>>> 6f2081760831772adce4a64881cf720cf9691d55
 
     Server.default.waitForBoot;
 
