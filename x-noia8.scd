@@ -1,10 +1,10 @@
 (
 {
 
-	var synth, state_stream, word, angle, addr;
+    var synth, state_stream, word, angle, addr;
 
     var synth, state_stream;
-
+  
     Server.default.waitForBoot;
 
     "/home/alex/Documents/xnoia_project/synths_file.scd".loadPaths;
