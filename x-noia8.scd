@@ -1,6 +1,5 @@
 (
 {
-
     var synth, state_stream, word, angle, addr;
 
     var synth, state_stream;
@@ -14,7 +13,6 @@
         collect: { | s, i | [s, i] }, inf).asStream;
 
     OSCdef.new(
-
         \selectsend,
         {
             arg msg, time, addr, port;
@@ -22,14 +20,12 @@
 
             if (msg[3] > 200)
 			{
-
                 #word, angle = state_stream.next;
                 addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
                 synth.release;
                 synth = Synth (word);
                 addr.sendMsg (\angle, angle);
             }
-
         },'/neurovals'
     );
 
@@ -60,9 +56,6 @@
             }
 
         },'/neurovals'
-
     );
-
 }.fork;
-
 )
