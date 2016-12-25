@@ -54,7 +54,6 @@
                 synth.set(\rq, msg[1].linlin(0, 100, 1, 3););
                 synth.set(\freqlag, msg[1].linlin(0, 100, 0.01, 0.1););
             }
-
         },'/neurovals'
     );
 }.fork;
