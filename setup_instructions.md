@@ -24,7 +24,10 @@ $ sudo emacs jacksclangstart.sh
 
 ###Copy & paste the following in the file
 ```javascript
-#!/bin/sh /usr/local/bin/jackd -P75 -dalsa -dhw:1 -p1024 -n3 -s -r44100 & sleep 1 su root -c “sclang -D /home/pi/neucode.scd” #where (neucode.scd) will be your SuperCollider script
+#!/bin/sh 
+/usr/local/bin/jackd -P75 -dalsa -dhw:1 -p1024 -n3 -s -r44100 & 
+sleep 1 su root -c “sclang -D /home/pi/neucode.scd” 
+#where (neucode.scd) will be your SuperCollider script
 ```
 
 ###Then create the second file
