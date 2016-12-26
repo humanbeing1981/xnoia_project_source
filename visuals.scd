@@ -2,18 +2,12 @@
 Server.default.waitForBoot;
 {
 
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//VISUALS
-
-
-
 	OSCdef.new(\getwaves, {
 		arg msg, time, addr, recvPort;
 		~radius = msg[1].linlin(0, 100, 100, 200);
 		~change = msg[1].linlin(0, 100, 0.1, 1);
 		~fps = msg[1].linlin(0, 100, 0, 10);
-		}, '/neurovals'
+    }, '/neurovals'
 	);
 
 	{
@@ -22,16 +16,12 @@ Server.default.waitForBoot;
 		var w= Window("bright", Rect(99, 99, width, height), false);
 		var u= UserView(w, Rect(0, 0, width, height));
 
-
-
 		//drawfunction
 		u.drawFunc= {
 
 			Pen.translate(width*0.5, height*0.5);
 			Pen.fillColor= Color.grey(~change, ~change);
 			Pen.fillOval(Rect.aboutPoint(Point(0, 0), ~radius, ~radius));
-
-
 
 		};
 
@@ -44,35 +34,24 @@ Server.default.waitForBoot;
 
 	}.defer(1);
 
-
-
-
-
-
-
-
-	//////////////////////////////////////////////////////////////////////////////////////////////////
-	//METERS
-
-
-o = OSCFunc({arg msg;
-			{
-				a.value = msg[1].linlin(0, 100, 0, 1);
-				b.value = msg[2].linlin(0, 100, 0, 1);
-				c.value = msg[3].linlin(-500, 500, 0, 1);
-				d.value = msg[4].linlin(1000, 1000000, 0, 1);
-				e.value = msg[5].linlin(1000, 200000, 0, 1);
-				f.value = msg[6].linlin(1000, 200000, 0, 1);
-				g.value = msg[7].linlin(1000, 70000, 0, 1);
-				h.value = msg[8].linlin(1000, 70000, 0, 1);
-				i.value = msg[9].linlin(1000, 70000, 0, 1);
-				k.value = msg[10].linlin(1000, 50000, 0, 1);
-				l.value = msg[11].linlin(100, 30000, 0, 1);
-				m.value = msg[12].linlin(0, 200, 0, 1);
-			    n.value = msg[13].linlin(0, 200, 0, 1);
+    o = OSCFunc({arg msg;
+        {
+            a.value = msg[1].linlin(0, 100, 0, 1);
+            b.value = msg[2].linlin(0, 100, 0, 1);
+            c.value = msg[3].linlin(-500, 500, 0, 1);
+            d.value = msg[4].linlin(1000, 1000000, 0, 1);
+            e.value = msg[5].linlin(1000, 200000, 0, 1);
+            f.value = msg[6].linlin(1000, 200000, 0, 1);
+            g.value = msg[7].linlin(1000, 70000, 0, 1);
+            h.value = msg[8].linlin(1000, 70000, 0, 1);
+            i.value = msg[9].linlin(1000, 70000, 0, 1);
+            k.value = msg[10].linlin(1000, 50000, 0, 1);
+            l.value = msg[11].linlin(100, 30000, 0, 1);
+            m.value = msg[12].linlin(0, 200, 0, 1);
+            n.value = msg[13].linlin(0, 200, 0, 1);
 		}.defer(1);
 
-			}, '/neurovals',
+    }, '/neurovals',
 	);
 
 	{
@@ -106,11 +85,7 @@ o = OSCFunc({arg msg;
         n = LevelIndicator(w, Rect(600, 10, 20, 180));
 		n.numSteps = 100;
 
-
-
 	}.defer(1);
-
-
 
 }.fork;
 )
