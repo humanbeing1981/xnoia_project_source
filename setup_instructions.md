@@ -1,7 +1,6 @@
 #INSTRUCTIONS ON HOW TO CONNECT NEUROSKY MINDWAVE TO RPI AND USE SUPERCOLLIDER TO MAKE MUSIC USING YOUR BRAINWAVES
 
-
-##FIRST STEP
+##FIRST STEP @@@@@@@@@@
 
 For python to be able to parse binary code from neyrosky mindwave it needs the following module
 
@@ -9,8 +8,7 @@ https://pypi.python.org/pypi/NeuroPy/0.1
 
 download or clone and install
 
-
-##STEP TWO
+##STEP TWO @@@@@@@@@@
 
 ###Create 2 executable files: The first file should be created with
 ```javascript
@@ -52,8 +50,7 @@ $ hcitool scan
 
 ###and you should see the mindwave device (have it on pairing mode first)
 
-
-##STEP THREE
+##STEP THREE @@@@@@@@@@
 
 ###Assuming you already have a python script ready now its time to create an autostart procedure with crontab so every time you boot the Rpi It should run 4 things:
 
@@ -78,11 +75,11 @@ $ sudo crontab -e
 @reboot sleep 15; python /home/pi/mind_test.py &
 #where (mind_test.py) shoyld be your python script file
 ```
-
-##THAT SHOULD DO IT
-
 Reboot est voila!
 
+##THAT SHOULD DO IT @@@@@@@@@@
+
+#CODE EXAMPLES
 
 ##CODE EXAMPLE FOR PYTHON USING THE “neuroPy” MODULE
 ```javascript
