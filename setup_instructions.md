@@ -138,7 +138,7 @@ OSCdef.new( \bang, { arg msg, time, addr, port; [msg, time, addr, port].postln;
 
 Synth(\noise, [freq:msg[1] * 100]);
 
-},’/bang’ )
+},’/neurovals’ )
 }.fork; 
 } 
 )
