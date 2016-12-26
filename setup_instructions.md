@@ -122,8 +122,10 @@ s.waitForBoot {
 { SynthDef.new(\noise,
 { arg freq=440, amp=0.2, pha = 0; var sig, env, sig2, gen;
 
-sig=SinOsc.ar (freq, 0.05); sig2=LFTri.ar (freq, 0.08) ; env = Env.triangle(4, amp); gen = EnvGen.kr(env, doneAction: 2);
-
+sig=SinOsc.ar (freq, 0.05); 
+sig2=LFTri.ar (freq, 0.08) ;
+env = Env.triangle(4, amp); 
+gen = EnvGen.kr(env, doneAction: 2);
 sig=[sig+sig2]*gen; Out.ar(0,(sig * amp).dup);
 
 }).play;
