@@ -1,5 +1,6 @@
 #INSTRUCTIONS ON HOW TO CONNECT NEUROSKY MINDWAVE TO RPI AND USE SUPERCOLLIDER TO MAKE MUSIC USING YOUR BRAINWAVES
 
+
 ##FIRST STEP
 
 For python to be able to parse binary code from neyrosky mindwave it needs the following module
@@ -12,37 +13,31 @@ download or clone and install
 ##STEP TWO
 
 ###Create 2 executable files: The first file should be created with
-
 ```javascript
 $ touch jacksclangstart.sh #you can use any name
 ```
 
 ###Then edit it using your favorite editor (I use emacs you can also use nano)
-
 ```javascript
 $ sudo emacs jacksclangstart.sh
 ```
 
 ###Copy & paste the following in the file
-
 ```javascript
 #!/bin/sh /usr/local/bin/jackd -P75 -dalsa -dhw:1 -p1024 -n3 -s -r44100 & sleep 1 su root -c “sclang -D /home/pi/neucode.scd” #where (neucode.scd) will be your SuperCollider script
 ```
 
 ###Then create the second file
-
 ```javascript
 $ touch rfconnect.sh #you can use any name
 ```
 
 ###Then edit it using your favorite editor (I use emacs you can also use nano)
-
 ```javascript
 $ sudo emacs rfconnect.sh
 ```
 
 ###Then copy $ paste the following in the file
-
 ```javascript
 rfcomm connect 0 XX:XX:XX:XX:XX #where you place the code for bluetooth of your device(neurosky mindwave-it is usually within the box)
 ```
@@ -51,8 +46,8 @@ rfcomm connect 0 XX:XX:XX:XX:XX #where you place the code for bluetooth of your 
 ```javascript
 $ hcitool scan
 ```
-###and you should see the mindwave device (have it on pairing mode first)
 
+###and you should see the mindwave device (have it on pairing mode first)
 
 
 ##STEP THREE
@@ -72,6 +67,7 @@ $ hcitool scan
 ```javascript 
 $ sudo crontab -e
 ``` 
+
 ###Then paste the following:
 ```javascript
 @reboot /home/pi/rfconnect.sh
@@ -79,9 +75,11 @@ $ sudo crontab -e
 @reboot sleep 15; python /home/pi/mind_test.py &
 #where (mind_test.py) shoyld be your python script file
 ```
+
 ##THAT SHOULD DO IT
 
 Reboot est voila!
+
 
 ##CODE EXAMPLE FOR PYTHON USING THE “neuroPy” MODULE
 ```javascript
@@ -116,10 +114,8 @@ while True:
             time.sleep(0.5)
             sendOSC("/neurovals", val)
 ```
+
 ##SUPECOLLIDER CODE SCRIPT EXAMPLE
-```javascript
-$sudo sclang neucode.scd
-```
 ```javascript
 ( 
 s.waitForBoot {
