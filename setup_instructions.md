@@ -8,6 +8,7 @@ https://pypi.python.org/pypi/NeuroPy/0.1
 
 download or clone and install
 
+
 ##STEP TWO
 
 ###Create 2 executable files: The first file should be created with
@@ -52,17 +53,29 @@ $ hcitool scan
 ```
 ###and you should see the mindwave device (have it on pairing mode first)
 
+
+
 ##STEP THREE
 
 ###Assuming you already have a python script ready now its time to create an autostart procedure with crontab so every time you boot the Rpi It should run 4 things:
 
-the jack driver
-the sc script
-the bluetooth connection
-the python script
-At the terminal type: “`javascript $ sudo crontab -e “` Then paste the following:
+1.the jack driver
+
+2.the sc script
+
+3.the bluetooth connection
+
+4.the python script
+
+
+###At the terminal type: 
+```javascript 
+$ sudo crontab -e
+``` 
+###Then paste the following:
 ```javascript
-@reboot /home/pi/rfconnect.sh @reboot /bin/sh /home/pi/jacksclangstart.sh @reboot sleep 15; python /home/pi/mind_test.py & #where (mind_test.py) shoyld be your python script file
+@reboot /home/pi/rfconnect.sh @reboot /bin/sh /home/pi/jacksclangstart.sh @reboot sleep 15; python /home/pi/mind_test.py &
+#where (mind_test.py) shoyld be your python script file
 ```
 ##THAT SHOULD DO IT
 
