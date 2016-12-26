@@ -54,7 +54,7 @@ $ hcitool scan
 
 ##STEP THREE
 
-###Assuming you already habe a python script ready now its time to create an autostart procedure with crontab so every time you boot the Rpi It should run 4 things:
+###Assuming you already have a python script ready now its time to create an autostart procedure with crontab so every time you boot the Rpi It should run 4 things:
 
 the jack driver
 the sc script
