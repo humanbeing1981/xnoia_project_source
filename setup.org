@@ -13,40 +13,36 @@ download or clone and install
 
 Create 2 executable files:
 The first file should be created with
-```javascript
+
 $ touch jacksclangstart.sh #you can use any name
-```
+
 Then edit it using your favorite editor (I use emacs you can also use nano)
 
-```javascript
 $ sudo emacs jacksclangstart.sh
-```
 
 Copy & paste the following in the file
 
-```javascript
 #!/bin/sh
 /usr/local/bin/jackd -P75 -dalsa -dhw:1 -p1024 -n3 -s -r44100 &
 sleep 1
 su root -c "sclang -D /home/pi/neucode.scd" #where (neucode.scd) will be your SuperCollider script
-```
 
 Then create the second file
-```javascript
+
 $ touch rfconnect.sh #you can use any name
-```
+
 Then edit it using your favorite editor (I use emacs you can also use nano)
-```javascript
+
 $ sudo emacs rfconnect.sh
-```
+
 Then copy $ paste the following in the file
-```javascript
+
 rfcomm connect 0 XX:XX:XX:XX:XX  #where you place the code for bluetooth of your device(neurosky mindwave-it is usually within the box)
-```
+
 if not the try:
-```javascript
+
 $ hcitool scan
-```
+
 and you should see the mindwave device (have it on pairing mode first)
 
 ##STEP THREE
