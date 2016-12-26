@@ -74,7 +74,9 @@ $ sudo crontab -e
 ``` 
 ###Then paste the following:
 ```javascript
-@reboot /home/pi/rfconnect.sh @reboot /bin/sh /home/pi/jacksclangstart.sh @reboot sleep 15; python /home/pi/mind_test.py &
+@reboot /home/pi/rfconnect.sh
+@reboot /bin/sh /home/pi/jacksclangstart.sh 
+@reboot sleep 15; python /home/pi/mind_test.py &
 #where (mind_test.py) shoyld be your python script file
 ```
 ##THAT SHOULD DO IT
@@ -83,7 +85,8 @@ Reboot est voila!
 
 ##CODE EXAMPLE FOR PYTHON USING THE “neuroPy” MODULE
 ```javascript
-from NeuroPy import NeuroPy import time object1=NeuroPy(‘/dev/rfcomm0’) time.sleep(2)
+from NeuroPy import NeuroPy import time object1=NeuroPy(‘/dev/rfcomm0’) 
+time.sleep(2)
 
 object1.start()
 
@@ -99,29 +102,42 @@ while True: if(object1.meditation>70): #another way of accessing data provided b
 ```
 ##SUPECOLLIDER CODE SCRIPT EXAMPLE
 ```javascript
-sudo sclang neucode.scd
-
-( s.waitForBoot { { SynthDef.new(\noise, { arg freq=440, amp=0.2, pha = 0; var sig, env, sig2, gen;
+$sudo sclang neucode.scd
+```
+```javascript
+( 
+s.waitForBoot {
+{ SynthDef.new(\noise,
+{ arg freq=440, amp=0.2, pha = 0; var sig, env, sig2, gen;
 
 sig=SinOsc.ar (freq, 0.05); sig2=LFTri.ar (freq, 0.08) ; env = Env.triangle(4, amp); gen = EnvGen.kr(env, doneAction: 2);
 
 sig=[sig+sig2]*gen; Out.ar(0,(sig * amp).dup);
 
-}).play; 5.wait;
+}).play;
+
+5.wait;
 
 OSCdef.new( \bang, { arg msg, time, addr, port; [msg, time, addr, port].postln;
 
 Synth(\noise, [freq:msg[1] * 100]);
 
-},’/bang’ ) }.fork; } )
+},’/bang’ )
+}.fork; 
+} 
+)
 ```
 ##GOOD LUCK
 
 ###examples of python code
 ```javascript
-from NeuroPy import NeuroPy import time import OSC
+from NeuroPy 
+import NeuroPy 
+import time 
+import OSC
 
-port = 57120 sc = OSC.OSCClient() sc.connect((‘192.168.1.4’,port)) #send locally to laptop object1 = NeuroPy(“/dev/rfcomm0”)
+port = 57120 sc = OSC.OSCClient() sc.connect((‘192.168.1.4’,port)) #send locally to laptop 
+object1 = NeuroPy(“/dev/rfcomm0”)
 
 def sendOSC(name, val): msg = OSC.OSCMessage() msg.setAddress(name) msg.append(val) try: sc.send(msg) except: pass print msg #debug
 
@@ -141,7 +157,10 @@ def poorSignal_callback(poorSignal_value): print “Value of poorSignal is”, p
 ```
 ###a working one
 ```javascript
-from NeuroPy import NeuroPy import time import OSC
+from NeuroPy 
+import NeuroPy 
+import time 
+import OSC
 
 port = 57120 sc = OSC.OSCClient() sc.connect((‘192.168.1.4’,port)) #send locally to laptop object1 = NeuroPy(“/dev/rfcomm0”)
 
@@ -157,23 +176,44 @@ while True: val = [object1.attention, object1.meditation, object1.rawValue, obje
 ```
 ###some sc examples
 ```javascript
-( s.waitForBoot { { SynthDef.new(\noise, { arg freq = 440, amp = 0.2, vol = 0.2, pha = 0, chron = 1; var sig, env, sig2, sig3, gen;
+( s.waitForBoot 
+{ 
+{ SynthDef.new(\noise, 
+{ arg freq = 440, amp = 0.2, vol = 0.2, pha = 0, chron = 1; var sig, env, sig2, sig3, gen;
 
-sig = SinOsc.ar (freq, pha); sig2 = LFTri.ar (freq, pha); sig3 = LFNoise2.ar (freq, vol); env = Env.triangle(chron, vol); gen = EnvGen.kr(env, doneAction: 2);
+sig = SinOsc.ar (freq, pha); sig2 = LFTri.ar (freq, pha); 
+sig3 = LFNoise2.ar (freq, vol); 
+env = Env.triangle(chron, vol); 
+gen = EnvGen.kr(env, doneAction: 2);
 
 sig=[sig+sig2+sig3]*gen; Out.ar(0,(sig * amp).dup);
 
-}).play; 5.wait;
+}).play;
+5.wait;
 
-OSCdef.new( \neurovals, { arg msg, time, addr, port, wildcard; [msg, time, addr, port].postln; if ((msg[1] <= 14), {wildcard = 2*261.63}); if ((msg[1] > 14) && (msg[1] <= 28), {wildcard = 2*293.66}); if ((msg[1] > 28) && (msg[1] <= 42), {wildcard = 2*329.63}); if ((msg[1] > 42) && (msg[1] <= 56), {wildcard = 2*349.23}); if ((msg[1] > 56) && (msg[1] <= 70), {wildcard = 2*392.00}); if ((msg[1] > 70) && (msg[1] <= 84), {wildcard = 2*440.00}); if ((msg[1] > 84), {wildcard = 2*493.88}); Synth(\noise, [freq:wildcard, chron:msg[1] / 25, pha:msg[1] / 100, vol:msg[1] / 100 / 4]);
+OSCdef.new( \neurovals, 
+{ arg msg, time, addr, port, wildcard; [msg, time, addr, port].postln; 
+if ((msg[1] <= 14), {wildcard = 2*261.63}); 
+if ((msg[1] > 14) && (msg[1] <= 28), {wildcard = 2*293.66}); 
+if ((msg[1] > 28) && (msg[1] <= 42), {wildcard = 2*329.63}); 
+if ((msg[1] > 42) && (msg[1] <= 56), {wildcard = 2*349.23});
+if ((msg[1] > 56) && (msg[1] <= 70), {wildcard = 2*392.00}); 
+if ((msg[1] > 70) && (msg[1] <= 84), {wildcard = 2*440.00}); 
+if ((msg[1] > 84), {wildcard = 2*493.88}); 
+Synth(\noise, [freq:wildcard, chron:msg[1] / 25, pha:msg[1] / 100, vol:msg[1] / 100 / 4]);
 
-},’/neurovals’ ) }.fork; } )
+},’/neurovals’ ) 
+}.fork; 
+}
+)
 ```
 ###and another one
 ```javascript
-( s.waitForBoot; {
+( s.waitForBoot; 
+{
 
-Ndef.new(\melodia, { arg amp = 0.2; var sig, sig1, env, sig2, sig3;
+Ndef.new(\melodia, 
+{ arg amp = 0.2; var sig, sig1, env, sig2, sig3;
 
 sig1 =Splay.ar(BPF.ar(PinkNoise.ar(0.01),[rrand(50,200),rrand(100,900), rrand(200,1200),rrand(500,2500),rrand(1000,3000)],rrand(0.01,$
 
@@ -191,7 +231,15 @@ Out.ar(0,(sig * amp).dup);
 
 Ndef(\melodia).play; Ndef(\melodia).fadeTime = 5;
 
-OSCdef.new( \att, { arg msg, time, addr, port; [msg, time, addr, port].postln; if ((msg[1] <= 14), {Ndef(\melodia).rebuild;}); if ((msg[1] > 14) && (msg[1] <= 28), {Ndef(\melodia).rebuild;}); if ((msg[1] > 28) && (msg[1] <= 42), {Ndef(\melodia).rebuild;}); if ((msg[1] > 42) && (msg[1] <= 56), {Ndef(\melodia).rebuild;}); if ((msg[1] > 56) && (msg[1] <= 70), {Ndef(\melodia).rebuild;}); if ((msg[1] > 70) && (msg[1] <= 84), {Ndef(\melodia).rebuild;}); if ((msg[1] > 84), {Ndef(\melodia).rebuild;});
+OSCdef.new( \att, 
+{ arg msg, time, addr, port; [msg, time, addr, port].postln; 
+if ((msg[1] <= 14), {Ndef(\melodia).rebuild;}); 
+if ((msg[1] > 14) && (msg[1] <= 28), {Ndef(\melodia).rebuild;});
+if ((msg[1] > 28) && (msg[1] <= 42), {Ndef(\melodia).rebuild;}); 
+if ((msg[1] > 42) && (msg[1] <= 56), {Ndef(\melodia).rebuild;}); 
+if ((msg[1] > 56) && (msg[1] <= 70), {Ndef(\melodia).rebuild;});
+if ((msg[1] > 70) && (msg[1] <= 84), {Ndef(\melodia).rebuild;}); 
+if ((msg[1] > 84), {Ndef(\melodia).rebuild;});
 
 },’/att’
 
