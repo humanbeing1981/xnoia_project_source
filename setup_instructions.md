@@ -85,20 +85,36 @@ Reboot est voila!
 
 ##CODE EXAMPLE FOR PYTHON USING THE “neuroPy” MODULE
 ```javascript
-from NeuroPy import NeuroPy import time object1=NeuroPy(‘/dev/rfcomm0’) 
-time.sleep(2)
+from NeuroPy import NeuroPy
+import time
+import OSC
+
+port = 57120
+sc = OSC.OSCClient()
+sc.connect(('127.0.0.1',port)) #send locally to sc
+object1 = NeuroPy("/dev/rfcomm0")
+
+zero = 0
+
+time.sleep(1)
 
 object1.start()
 
-def attention_callback(attention_value): “this function will be called everytime NeuroPy has a new value for attention” print “Value of attention is”,attention_value #do other stuff (fire a rocket), based on the obtained value of attention_value #do some more stuff return None
+def sendOSC(name, val):
+    msg = OSC.OSCMessage()
+    msg.setAddress("/neurovals")
+    msg.extend([object1.attention, object1.meditation, object1.rawValue, object1.delta, object1.theta, object1.lowAlpha, object1.highAlpha, object1.lowBeta, object1.highBeta, object1.lowGamma, object1.midGamma, object1.poorSignal, object1.blinkStrength])
+    try:
+        sc.send(msg)
+    except:
+        pass
+    print msg #debug
 
-#set call back: object1.setCallBack(“attention”,attention_callback)
-
-#call start method object1.start()
-
-while True: if(object1.meditation>70): #another way of accessing data provided by headset (1st being call backs) object1.stop() #if meditation level reaches above 70, stop fetching data from the headset
-
-#other variables: attention,meditation,rawValue,delta,theta,lowAlpha,highAlpha,lowBeta,highBeta,lowGamma,midGamma, poorSignal and blinkStrength
+while True:
+    val = [object1.attention, object1.meditation, object1.rawValue, object1.delta, object1.theta, object1.lowAlpha, object1.highAlpha, object1.lowBeta, object1.highBeta, object1.lowGamma, object1.midGamma, object1.poorSignal, object1.blinkStrength]
+        if val!=zero:
+            time.sleep(0.5)
+            sendOSC("/neurovals", val)
 ```
 ##SUPECOLLIDER CODE SCRIPT EXAMPLE
 ```javascript
@@ -128,124 +144,3 @@ Synth(\noise, [freq:msg[1] * 100]);
 )
 ```
 ##GOOD LUCK
-
-###examples of python code
-```javascript
-from NeuroPy 
-import NeuroPy 
-import time 
-import OSC
-
-port = 57120 sc = OSC.OSCClient() sc.connect((‘192.168.1.4’,port)) #send locally to laptop 
-object1 = NeuroPy(“/dev/rfcomm0”)
-
-def sendOSC(name, val): msg = OSC.OSCMessage() msg.setAddress(name) msg.append(val) try: sc.send(msg) except: pass print msg #debug
-
-def attention_callback(attention_value): print “Value of attention is”, attention_value sendOSC(“/att”, attention_value) return None
-
-def meditation_callback(meditation_value): print “Value of meditation is”, meditation_value sendOSC(“/med”, meditation_value) return None
-
-def blinkStrength_callback(blinkStrength_value): print “Value of blinkStrength is”, blinkStrength_value sendOSC(“/bStngth”, blinkStrength_value) return None
-
-def rawValue_callback(rawValue_value): print “Value of rawValue is”, rawValue_value sendOSC(“/rvl”, rawValue_value) return None
-
-def poorSignal_callback(poorSignal_value): print “Value of poorSignal is”, poorSignal_value sendOSC(“/pSgnl”, poorSignal_value) return None
-
-#set call back: object1.setCallBack(“attention”, attention_callback) object1.setCallBack(“meditation”, meditation_callback) object1.setCallBack(“blinkStrength”, blinkStrength_callback) object1.setCallBack(“rawValue”, rawValue_callback) object1.setCallBack(“poorSignal”, meditation_callback)
-
-#call start method object1.start()
-```
-###a working one
-```javascript
-from NeuroPy 
-import NeuroPy 
-import time 
-import OSC
-
-port = 57120 sc = OSC.OSCClient() sc.connect((‘192.168.1.4’,port)) #send locally to laptop object1 = NeuroPy(“/dev/rfcomm0”)
-
-zero = 0
-
-time.sleep(1)
-
-object1.start()
-
-def sendOSC(name, val): msg = OSC.OSCMessage() msg.setAddress(“/neurovals”) msg.extend([object1.attention, object1.meditation, object1.rawValue, object1.delta, object1.theta, object1.lowAlpha, object1.highAlpha, object1.lowBeta, object1.highBeta, object1.lowGamma, object1.midGamma, object1.poorSignal, object1.blinkStrength]) try: sc.send(msg) except: pass print msg #debug
-
-while True: val = [object1.attention, object1.meditation, object1.rawValue, object1.delta, object1.theta, object1.lowAlpha, object1.highAlpha, object1.lowBeta, object1.highBeta, object1.lowGamma, object1.midGamma, object1.poorSignal, object1.blinkStrength] if val!=zero: time.sleep(2) sendOSC(“/neurovals”, val)
-```
-###some sc examples
-```javascript
-( s.waitForBoot 
-{ 
-{ SynthDef.new(\noise, 
-{ arg freq = 440, amp = 0.2, vol = 0.2, pha = 0, chron = 1; var sig, env, sig2, sig3, gen;
-
-sig = SinOsc.ar (freq, pha); sig2 = LFTri.ar (freq, pha); 
-sig3 = LFNoise2.ar (freq, vol); 
-env = Env.triangle(chron, vol); 
-gen = EnvGen.kr(env, doneAction: 2);
-
-sig=[sig+sig2+sig3]*gen; Out.ar(0,(sig * amp).dup);
-
-}).play;
-5.wait;
-
-OSCdef.new( \neurovals, 
-{ arg msg, time, addr, port, wildcard; [msg, time, addr, port].postln; 
-if ((msg[1] <= 14), {wildcard = 2*261.63}); 
-if ((msg[1] > 14) && (msg[1] <= 28), {wildcard = 2*293.66}); 
-if ((msg[1] > 28) && (msg[1] <= 42), {wildcard = 2*329.63}); 
-if ((msg[1] > 42) && (msg[1] <= 56), {wildcard = 2*349.23});
-if ((msg[1] > 56) && (msg[1] <= 70), {wildcard = 2*392.00}); 
-if ((msg[1] > 70) && (msg[1] <= 84), {wildcard = 2*440.00}); 
-if ((msg[1] > 84), {wildcard = 2*493.88}); 
-Synth(\noise, [freq:wildcard, chron:msg[1] / 25, pha:msg[1] / 100, vol:msg[1] / 100 / 4]);
-
-},’/neurovals’ ) 
-}.fork; 
-}
-)
-```
-###and another one
-```javascript
-( s.waitForBoot; 
-{
-
-Ndef.new(\melodia, 
-{ arg amp = 0.2; var sig, sig1, env, sig2, sig3;
-
-sig1 =Splay.ar(BPF.ar(PinkNoise.ar(0.01),[rrand(50,200),rrand(100,900), rrand(200,1200),rrand(500,2500),rrand(1000,3000)],rrand(0.01,$
-
-sig2 = ({ SinOsc.ar(Rand(300,400) + ({exprand(1, 1.3)} ! rrand(1, 9))) * 0.1});
-
-sig3 = ({ (Ringz.ar(Impulse.ar([rrand(0.5,10)]), 80, [rrand(0.1,2)]).dup) * 0.1 });
-
-sig=[sig1+sig2+sig3];
-
-Out.ar(0,(sig * amp).dup);
-
-}).play;
-
-5.wait;
-
-Ndef(\melodia).play; Ndef(\melodia).fadeTime = 5;
-
-OSCdef.new( \att, 
-{ arg msg, time, addr, port; [msg, time, addr, port].postln; 
-if ((msg[1] <= 14), {Ndef(\melodia).rebuild;}); 
-if ((msg[1] > 14) && (msg[1] <= 28), {Ndef(\melodia).rebuild;});
-if ((msg[1] > 28) && (msg[1] <= 42), {Ndef(\melodia).rebuild;}); 
-if ((msg[1] > 42) && (msg[1] <= 56), {Ndef(\melodia).rebuild;}); 
-if ((msg[1] > 56) && (msg[1] <= 70), {Ndef(\melodia).rebuild;});
-if ((msg[1] > 70) && (msg[1] <= 84), {Ndef(\melodia).rebuild;}); 
-if ((msg[1] > 84), {Ndef(\melodia).rebuild;});
-
-},’/att’
-
-);
-
-}.fork;
-
-)
-```
