@@ -81,7 +81,7 @@ Reboot est voila!
 
 #CODE EXAMPLES
 
-##CODE EXAMPLE FOR PYTHON USING THE “neuroPy” MODULE
+##CODE EXAMPLE FOR PYTHON USING THE “NeuroPy” MODULE
 ```javascript
 from NeuroPy import NeuroPy
 import time
