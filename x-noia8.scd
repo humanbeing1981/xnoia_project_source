@@ -2,7 +2,6 @@
 {
 	var synth, state_stream, word, angle, addr, last_blink_time = 0;
 
-
 	Server.default.waitForBoot;
 
 	"/home/alex/Desktop/synthdefs_file.scd".loadPaths;
