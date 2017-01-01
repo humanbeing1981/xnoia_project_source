@@ -11,8 +11,6 @@ float angle1 = 0.0;
 float segLength = 200;
 float c = 1;
 
-//exw balei c*100
-
 
 void setup() {
     size(1128, 851);
@@ -49,18 +47,11 @@ void draw() {
                 float xx = xyArray[ii][0];
                 float yy = xyArray[ii][1];
                 strokeWeight(10);
-                //line(x, y, xx, yy);
             }
         }
         strokeWeight(10);
         ellipse(x, y, 5, 5);
     }
-    //translate(width/1.7, height/2.5);
-    //rotate(angle1);
-    //textSize (32);
-    //text("ΟΜΟΝΟΙΑ", 10, 30);
-    //fill(0);
-
 }
 
 void segment(float x, float y, float a) {
