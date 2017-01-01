@@ -2,6 +2,7 @@
 {
 	var synth, state_stream, word, angle, addr, last_blink_time = 0;
 
+
 	Server.default.waitForBoot;
 
 	"/home/alex/Desktop/synthdefs_file.scd".loadPaths;
@@ -16,7 +17,7 @@
 		{
 			arg msg, time, addr, port;
 
-			if (msg[3] > 200 and: { time - last_blink_time > 0.5 })
+			if (msg[3] > 200 and: { time - last_blink_time > 0.501 })
 
 			{
 				#word, angle = state_stream.next;
