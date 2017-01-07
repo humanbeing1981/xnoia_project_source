@@ -31,7 +31,6 @@ Server.default.waitForBoot;
 		w.front;
 		u.animate= true;
 
-
 	}.defer(1);
 
     o = OSCFunc({arg msg;
@@ -89,17 +88,3 @@ Server.default.waitForBoot;
 
 }.fork;
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
