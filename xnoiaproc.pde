@@ -11,7 +11,6 @@ float angle1 = 0.0;
 float segLength = 200;
 float c = 1;
 
-
 void setup() {
     size(1128, 851);
     bg = loadImage("omonoialex.jpg");
