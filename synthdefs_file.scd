@@ -23,8 +23,7 @@ SynthDef(\symponoia, | freq = 440, amp = 1, art = 1, gate = 1 |
 }).add;
 /////////////////////////////////////////////////////////////////////////////////////////////
 SynthDef(\pronoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1100, width =
-	0.15,
-	detune = 1.005, preamp = 4|
+	0.15, detune = 1.005, preamp = 4 |
 	var sig,
 	env = Env.adsr(0.01, 0.3, 0.4, 0.1);
 	freq = Lag.kr(freq, slideTime);
@@ -34,8 +33,8 @@ SynthDef(\pronoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1
 	Out.ar(0, sig ! 2)
 }).add;
 /////////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\oxynoia, { |out, freq = 440, gate = 0.5, plfofreq = 6, mw = 0, ffreq =
-	2000, rq = 0.3, freqlag = 0.05, amp = 1|
+SynthDef(\oxynoia, { | out, freq = 440, gate = 0.5, plfofreq = 6, mw = 0, ffreq =
+	2000, rq = 0.3, freqlag = 0.05, amp = 1 |
 	var sig, plfo, fcurve;
 	plfo = SinOsc.kr(plfofreq, mul:mw, add:1);
 	freq = Lag.kr(freq, freqlag) * plfo;
@@ -48,8 +47,8 @@ SynthDef(\oxynoia, { |out, freq = 440, gate = 0.5, plfofreq = 6, mw = 0, ffreq =
 	Out.ar(out, sig ! 2)
 }).add;
 ///////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\epinoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1100, width =
-	0.15, detune = 1.005, preamp = 4, mod = 5, phase = 0|
+SynthDef(\epinoia, { | freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1100, width =
+	0.15, detune = 1.005, preamp = 4, mod = 5, phase = 0 |
 	var sig, dseq, trig, out, env;
 	env = Env.adsr(0.01, 0.3, 0.4, 0.1);
 	freq = Lag.kr(freq, slideTime*mod);
@@ -61,10 +60,8 @@ SynthDef(\epinoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1
 	out =  sig * DelayN.ar((SinOsc.ar((Demand.ar(trig, 0, dseq)), phase, amp)),1,1);
 	Out.ar(0, out+trig ! 2);
 }).add;
-
 //////////////////////////////////////////////////////////////////////////////////////////////
-
-SynthDef.new(\dixonoia, {|ampHz = 4, freq = 40, maxPartial = 4, width = 0.5, gate = 1, amp = 1|
+SynthDef.new(\dixonoia, { | ampHz = 4, freq = 40, maxPartial = 4, width = 0.5, gate = 1, amp = 1 |
 	var amp1, amp2, freq1, freq2, sig1, sig2;
 	var env;
 	env = Env.adsr;
@@ -77,10 +74,9 @@ SynthDef.new(\dixonoia, {|ampHz = 4, freq = 40, maxPartial = 4, width = 0.5, gat
 	sig1 = Pulse.ar(freq1, width, amp1);
 	sig2 = Pulse.ar(freq2, width, amp2);
 	Out.ar(0, (sig1+sig2).dup * EnvGen.kr (env, gate, doneAction: 2) * amp);
-
 }).add;
 ///////////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\paranoia, { |freq = 440, phase = 1, amp = 1, gate = 1, tempo = 1, in = 0, aval = 0.2, bval = 0.5 |
+SynthDef(\paranoia, { | freq = 440, phase = 1, amp = 1, gate = 1, tempo = 1, in = 0, aval = 0.2, bval = 0.5 |
 	var env, dseq, trig, out, sig, n;
 	in = InFeedback.ar(in,1);
 	n = LFNoise0;
@@ -104,7 +100,6 @@ SynthDef(\krypsinoia, { | phase = 0, amp = 1, freq = 300, gate = 1, mod = 5 |
 	rlpf = RLPF.ar(synth, 200);
 	Out.ar(0, synth * rlpf * env * 1.5);
 }).add;
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 SynthDef(\amvlinoia, { | freq = 261, tone = 3, art = 1, amp = 1, gate = 1, mod = 5, phase = 0 |
 	var env, out, dseq, trig;
@@ -115,7 +110,7 @@ SynthDef(\amvlinoia, { | freq = 261, tone = 3, art = 1, amp = 1, gate = 1, mod =
 	Out.ar(0, out * env * 1.5);
 }).add;
 //////////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\anoia, {| freq = 261, tone = 3, art = 1, amp = 1, gate = 1, mod = 5, phase = 0|
+SynthDef(\anoia, { | freq = 261, tone = 3, art = 1, amp = 1, gate = 1, mod = 5, phase = 0 |
 	var env, out, dseq, trig;
 	env = EnvGen.ar(Env.adsr, gate, doneAction: 2) * amp;
 	trig = Impulse.ar(freq/2, phase, amp);
