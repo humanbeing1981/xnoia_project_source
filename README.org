@@ -19,14 +19,6 @@ On this Python file we have the code to enable us to receive information from th
 In order for this to work one will need the NeuroPy module for Python availiable from https://github.com/lihas/NeuroPy.
 This library is written in Python and was created to connect, interact and receive data from the headset device.
 
-How to install NeuroPy:
-1. Download the source distribution (zip file) from  from https://github.com/lihas/NeuroPy/tree/master/dist or https://pypi.python.org/pypi/NeuroPy/0.1
-2. Unzip and navigate through the terminal to your download folder containing setup.py
-3. Run the following command on your terminal.
-#+BEGIN_SRC sclang
-python setup.py install
-#+END_SRC
-
 The default port SuperCollider is listening is 57120 and the ip is the local one 127.0.0.1 (unless SuperCollider Server runs on another machine in the network).
 Notice that the time interval for the OSC messages is 0.5 secs. The messages that is sends is "/neurovals".
 
@@ -72,6 +64,14 @@ For python to be able to parse binary code from neyrosky mindwave it needs the f
 https://pypi.python.org/pypi/NeuroPy/0.1
 
 download or clone and install
+
+How to install NeuroPy:
+1. Download the source distribution (zip file) from  from https://github.com/lihas/NeuroPy/tree/master/dist or https://pypi.python.org/pypi/NeuroPy/0.1
+2. Unzip and navigate through the terminal to your download folder containing setup.py
+3. Run the following command on your terminal.
+#+BEGIN_SRC sclang
+python setup.py install
+#+END_SRC
 
 ** STEP TWO @@@@@@@@@@
 
