@@ -55,7 +55,7 @@ with the 10 words of the image. It also produces a line with its one point being
 received from the file xnoia8.scd. So each time we have a msg[3] > 200 value in xnoia8.scd we get a movement of the line in xnoiaproc.pde.
 
 
-* INSTRUCTIONS ON HOW TO CONNECT NEUROSKY MINDWAVE TO Rpi or Linux Platform
+* INSTRUCTIONS ON HOW TO CONNECT NEUROSKY MINDWAVE and run this project on a Linux Platform
 
 ** FIRST STEP @@@@@@@@@@
 
@@ -75,25 +75,7 @@ python setup.py install
 
 ** STEP TWO @@@@@@@@@@
 
-*** Create 2 executable files: The first file should be created with
-#+BEGIN_SRC sclang
-$ touch jacksclangstart.sh #you can use any name
-#+END_SRC
-
-*** Then edit it using your favorite editor (I use emacs you can also use nano)
-#+BEGIN_SRC sclang
-$ sudo emacs jacksclangstart.sh
-#+END_SRC
-
-*** Copy & paste the following in the file
-#+BEGIN_SRC sclang
-#!/bin/sh
-/usr/local/bin/jackd -P75 -dalsa -dhw:1 -p1024 -n3 -s -r44100 &
-sleep 1 su root -c “sclang -D /home/pi/neucode.scd”
-#where (neucode.scd) will be your SuperCollider script
-#+END_SRC
-
-*** Then create the second file
+*** Create this file
 #+BEGIN_SRC sclang
 $ touch rfconnect.sh #you can use any name
 #+END_SRC
@@ -115,29 +97,16 @@ $ hcitool scan
 
 *** and you should see the mindwave device (have it on pairing mode first)
 
-** STEP THREE (optional or run them manually)@@@@@@@@@@
+** STEP THREE (run them manually)@@@@@@@@@@
 
-*** Assuming you already have a python script ready now its time to create an autostart procedure with crontab so (if you choose) every time you boot the Rpi It should run 4 things:
+*** Open the terminal and run  the files one by one
 
-1.the jack driver
+1.sudo sh rfconnect.sh
 
-2.the sc script
+2.sudo python mind_alex.py
 
-3.the bluetooth connection
+3.through emacs run visuals.scd & xnoia8.scd
 
-4.the python script
+4.lastly run xnoiaproc.pde through Processing
 
-
-*** At the terminal type:
-#+BEGIN_SRC sclang
-$ sudo crontab -e
-#+END_SRC
-
-*** Then paste the following:
-#+BEGIN_SRC sclang
-@reboot /home/pi/rfconnect.sh
-@reboot /bin/sh /home/pi/jacksclangstart.sh
-@reboot sleep 15; python /home/pi/mind_test.py &
-#where (mind_test.py) shoyld be your python script file
-#+END_SRC
-*** Reboot est voila!
+***Good Luck
