@@ -33,6 +33,10 @@ Notice that the time interval for the OSC messages is 0.5 secs. The messages tha
 NeuroPy gives 13 different variables that can be called:
 attention,meditation,rawValue,delta,theta,lowAlpha,highAlpha,lowBeta,highBeta,lowGamma,midGamma, poorSignal and blinkStrength
 
+*** omonoialex.jpg
+
+This is the background image utilized in xnoiaproc.pde. Was created in photoshop and depicts the omonoia square in Athens/Greece.
+
 *** synthdefs_file.scd
 
 This file contains the SynthDefs for this project. It is being called within the file described later xnoia8.scd. It has 10 designed sounds corresponding to 10 words
