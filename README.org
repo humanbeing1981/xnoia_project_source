@@ -7,11 +7,13 @@ This project is about the Greek synthetic word "-noia" that derive from (νου�
 meaning mind and how this correlates to the modern life of man seen through an
 opticoacoustic performance. I utilize 10 words using the same root (-noia) to illustrate the differences in mind states and emotion.
 These words are: Omonoia, pronoia, epinoia, amvlynoia, paranoia, dixonoia, krypsinoia, anoia, oxynoia, symponoia.
+They are presented in a circle with a background image of the omonoia square in Athens/Greece onto a projector screen.
+A different sound is produced for each word. The word are indicated with a line that follows the radius angle each time.
 
 For the implementation of this project I use the Neurosky Mindwave device to trigger
-sound and visuals.  
-
-*Here add description about what the installation looks like and how it works - briefly. Also, what its components are - BCI, computer, speakers, projector.  And how the user uses it*
+sound and visuals. The chain of action is BCI, laptop, projector and speakers.
+I use a Linux laptop connect to a projector and speakers. The performer is using blinking of the eyes to start the performance and to change to the next word.
+Also he/she uses the attention value to alter/modify the parameters of the sound in each word.
 
 Below there is a description of each file in this repository and a short guide on how to install and run the necessary components.
 
