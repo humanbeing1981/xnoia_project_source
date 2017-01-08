@@ -1,3 +1,5 @@
 # xnoia_project_source
-SuperCollider and Java/Processing code for the xnoia project (MA Thesis at EKPA)
+*SuperCollider and Java/Processing code for the xnoia project (MA Thesis at EKPA)
 by A.S.S.
+
+*This project is about the Greek synthetic word "-noia" that derive from (νους) meaning mind.
