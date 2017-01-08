@@ -5,7 +5,8 @@
 
 This project is about the Greek synthetic word "-noia" that derive from (νους)
 meaning mind and how this correlates to the modern life of man seen through an
-opticoacoustic performance.
+opticoacoustic performance. I utilize 10 words using the same root (-noia) to illustrate the differences in mind states and emotion.
+These words are: Omonoia, pronoia, epinoia, amvlynoia, paranoia, dixonoia, krypsinoia, anoia, oxynoia, symponoia.
 
 For the implementation of this project I use the Neurosky Mindwave device to trigger
 sound and visuals.
@@ -14,14 +15,45 @@ Below there is a description of each file in this repository and a short guide o
 
 *** mind_alex.py
 
-On this Python file we have the code to enable us to receive information from the Neurosky Mindwave device and send OSC messages to Supercollider.
+On this Python file we have the code to enable us to receive information from the Neurosky Mindwave device and send OSC messages to SuperCollider.
 In order for this to work one will need the NeuroPy module for Python availiable from https://github.com/lihas/NeuroPy.
 This library is written in Python and was created to connect, interact and receive data from the headset device.
 
-How to install:
+How to install NeuroPy:
 1. Download the source distribution (zip file) from  from https://github.com/lihas/NeuroPy/tree/master/dist or https://pypi.python.org/pypi/NeuroPy/0.1
-2. Unzip and navigate to the folder containing setup.py
-3. Run the following command
+2. Unzip and navigate through the terminal to your download folder containing setup.py
+3. Run the following command on your terminal.
 #+BEGIN_SRC sclang
 python setup.py install
 #+END_SRC
+
+The default port SuperCollider is listening is 57120 and the ip is the local one 127.0.0.1 (unless SuperCollider Server runs on another machine in the network).
+Notice that the time interval for the OSC messages is 0.5 secs. The messages that is sends is "/neurovals".
+
+NeuroPy gives 13 different variables that can be called:
+attention,meditation,rawValue,delta,theta,lowAlpha,highAlpha,lowBeta,highBeta,lowGamma,midGamma, poorSignal and blinkStrength
+
+*** synthdefs_file.scd
+
+This file contains the SynthDefs for this project. It is being called within the file described later xnoia8.scd. It has 10 designed sounds corresponding to 10 words
+used within the project.
+
+*** visuals.scd
+
+The purpose of this file is to have a visual reference of the 13 different function values I receive from Python and a visual amount of concentration the user
+is performing. It receives OSC messages from Python. The first part of the code produces a circle that tends to white and its radius increases with the value of msg[1].
+The opposite happens when the value of msg[1] decreases so the radius decreases and the color tends to black. The second part of the code utilizes LevelIndicator to correspond the values from Python to
+graphical representation. This is a file to assist the user on performance.
+
+*** xnoia8.scd
+
+In this file we have the main audio code. There are 2 things happening here. First the synthdefs_file.scd is being called and the instruments are
+set as a stream. Then upon the OSC message msg[3], which corresponds to raw value, we get to play each synth then stop it then play the next and also send
+the OSC message "/xnoia" to Processing. In the Second part
+upon OSC message msg[1] we get to change the arguments of each SynthDefs (where they exist) by utilizing the attention value.
+
+*** xnoiaproc.pde
+
+Here we have the file of the main visuals. It is runs in Processing and it uses the background image omonoialex.jpg. The code itself is creating 10 points in a circle that are aligned
+with the 10 words of the image. It also produces a line with its one point being always the center of the circle and the other being analogous to the messages "/xnoia" that is being
+received from the file xnoia8.scd. So each time we have a msg[3] > 200 value in xnoia8.scd we get a movement of the line in xnoiaproc.pde.
