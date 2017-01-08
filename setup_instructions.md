@@ -13,7 +13,7 @@ download or clone and install
 ###Create 2 executable files: The first file should be created with
 ```javascript
 $ touch jacksclangstart.sh #you can use any name
-```
+``` 
 
 ###Then edit it using your favorite editor (I use emacs you can also use nano)
 ```javascript

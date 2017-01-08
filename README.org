@@ -61,3 +61,82 @@ upon OSC message msg[1] we get to change the arguments of each SynthDefs (where 
 Here we have the file of the main visuals. It is runs in Processing and it uses the background image omonoialex.jpg. The code itself is creating 10 points in a circle that are aligned
 with the 10 words of the image. It also produces a line with its one point being always the center of the circle and the other being analogous to the messages "/xnoia" that is being
 received from the file xnoia8.scd. So each time we have a msg[3] > 200 value in xnoia8.scd we get a movement of the line in xnoiaproc.pde.
+
+* INSTRUCTIONS ON HOW TO CONNECT NEUROSKY MINDWAVE TO RPI or LINUX PLATFORM AND USE SUPERCOLLIDER TO MAKE MUSIC USING YOUR BRAINWAVES
+
+** FIRST STEP @@@@@@@@@@
+
+For python to be able to parse binary code from neyrosky mindwave it needs the following module
+
+https://pypi.python.org/pypi/NeuroPy/0.1
+
+download or clone and install
+
+** STEP TWO @@@@@@@@@@
+
+*** Create 2 executable files: The first file should be created with
+```javascript
+$ touch jacksclangstart.sh #you can use any name
+```
+
+*** Then edit it using your favorite editor (I use emacs you can also use nano)
+```javascript
+$ sudo emacs jacksclangstart.sh
+```
+
+*** Copy & paste the following in the file
+```javascript
+#!/bin/sh
+/usr/local/bin/jackd -P75 -dalsa -dhw:1 -p1024 -n3 -s -r44100 &
+sleep 1 su root -c “sclang -D /home/pi/neucode.scd”
+#where (neucode.scd) will be your SuperCollider script
+```
+
+*** Then create the second file
+```javascript
+$ touch rfconnect.sh #you can use any name
+```
+
+*** Then edit it using your favorite editor (I use emacs you can also use nano)
+```javascript
+$ sudo emacs rfconnect.sh
+```
+
+*** Then copy $ paste the following in the file
+```javascript
+rfcomm connect 0 XX:XX:XX:XX:XX #where you place the code for bluetooth of your device(neurosky mindwave-it is usually within the box)
+```
+
+*** if not the try:
+```javascript
+$ hcitool scan
+```
+
+***and you should see the mindwave device (have it on pairing mode first)
+
+##STEP THREE (optional or run them manually)@@@@@@@@@@
+
+###Assuming you already have a python script ready now its time to create an autostart procedure with crontab so (if you choose) every time you boot the Rpi It should run 4 things:
+
+1.the jack driver
+
+2.the sc script
+
+3.the bluetooth connection
+
+4.the python script
+
+
+###At the terminal type:
+```javascript
+$ sudo crontab -e
+```
+
+###Then paste the following:
+```javascript
+@reboot /home/pi/rfconnect.sh
+@reboot /bin/sh /home/pi/jacksclangstart.sh
+@reboot sleep 15; python /home/pi/mind_test.py &
+#where (mind_test.py) shoyld be your python script file
+```
+Reboot est voila!
