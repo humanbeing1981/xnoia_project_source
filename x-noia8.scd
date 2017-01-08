@@ -1,6 +1,6 @@
 (
 {
-	var synth, state_stream, word, angle, addr, last_blink_time = 0;
+	var synth, state_stream, word, angle, last_blink_time = 0, addr = NetAddr("127.0.0.1", 12001);
 
 	Server.default.waitForBoot;
 
@@ -20,8 +20,6 @@
 
 			{
 				#word, angle = state_stream.next;
-				// make addr a top-level closure variable to avoid creating a new NetAddr each time the OSCdef func is run
-				addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
 				synth.release;
 				synth = Synth (word);
 				addr.sendMsg (\angle, angle);
