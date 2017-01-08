@@ -10,7 +10,7 @@
 	state_stream = Pseq([\omonoia, \pronoia, \epinoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia,\anoia, \oxynoia, \symponoia]
 		collect: { | s, i | [s, i] }, inf).asStream;
 
-    addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
+        addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
     
 	OSCdef.new(
 
