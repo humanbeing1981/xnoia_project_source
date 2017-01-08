@@ -109,4 +109,4 @@ $ hcitool scan
 
 4.lastly run xnoiaproc.pde through Processing
 
-***Good Luck
+*** Good Luck
