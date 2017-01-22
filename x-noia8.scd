@@ -2,16 +2,15 @@
 {
 	var synth, state_stream, word, angle, addr, last_blink_time = 0;
 
+
 	Server.default.waitForBoot;
 
 	"/home/alex/Desktop/synthdefs_file.scd".loadPaths;
 	1.wait;
 
-	state_stream = Pseq([\omonoia, \pronoia, \epinoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia,\anoia, \oxynoia, \symponoia]
+	state_stream = Pseq([\omonoia, \epinoia, \dianoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia,\anoia, \oxynoia,  \pronoia]
 		collect: { | s, i | [s, i] }, inf).asStream;
 
-        addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
-    
 	OSCdef.new(
 
 		\selectsend,
@@ -22,6 +21,7 @@
 
 			{
 				#word, angle = state_stream.next;
+				addr = NetAddr("127.0.0.1", 12001); // 12001  default port for PROCESSING
 				synth.release;
 				synth = Synth (word);
 				addr.sendMsg (\angle, angle);
