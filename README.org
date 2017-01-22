@@ -6,7 +6,7 @@
 This project is about the Greek synthetic word "-noia" that derive from (νους)
 meaning mind and how this correlates to the modern life of man seen through an
 opticoacoustic performance. I utilize 10 words using the same root (-noia) to illustrate the differences in mind states and emotion.
-These words are: Omonoia, pronoia, epinoia, amvlynoia, paranoia, dixonoia, krypsinoia, anoia, oxynoia, symponoia.
+These words are: Omonoia, pronoia, epinoia, amvlynoia, paranoia, dixonoia, krypsinoia, anoia, oxynoia, dianoia.
 They are presented in a circle with a background image of the omonoia square in Athens/Greece onto a projector screen.
 A different sound is produced for each word. The word are indicated with a line that follows the radius angle each time.
 
@@ -54,7 +54,7 @@ upon OSC message msg[1] we get to change the arguments of each SynthDefs (where 
 
 *** xnoiaproc.pde
 
-Here we have the file of the main visuals. It is runs in Processing and it uses the background image omonoialex.jpg. The code itself is creating 10 points in a circle that are aligned
+Here we have the file of the main visuals. It runs in Processing and it uses the background image omonoialex.jpg. The code itself is creating 10 points in a circle that are aligned
 with the 10 words of the image. It also produces a line with its one point being always the center of the circle and the other being analogous to the messages "/xnoia" that is being
 received from the file xnoia8.scd. So each time we have a msg[3] > 200 value in xnoia8.scd we get a movement of the line in xnoiaproc.pde.
 
