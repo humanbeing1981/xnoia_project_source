@@ -8,7 +8,7 @@
 	"/home/alex/Desktop/synthdefs_file.scd".loadPaths;
 	1.wait;
 
-	state_stream = Pseq([\omonoia, \epinoia, \dianoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia,\anoia, \oxynoia,  \pronoia]
+	state_stream = Pseq([\omonoia, \epinoia, \dianoia, \amvlinoia, \paranoia, \dixonoia, \krypsinoia, \anoia, \oxynoia, \pronoia]
 		collect: { | s, i | [s, i] }, inf).asStream;
 
 	OSCdef.new(

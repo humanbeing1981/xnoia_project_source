@@ -19,19 +19,19 @@ SynthDef(\dianoia, {| freq = 440, amp = 1, art = 1, gate = 1 |
 	env = EnvGen.ar(Env.adsr, gate, doneAction: 2);
 	snd1 = SinOsc.ar(freq/2);
 	snd2 = SinOsc.ar(Line.ar((freq+15)/2, freq/2, art));
-	Out.ar(0, [(snd1+snd2).dup] * amp * env * 1.5);
+	Out.ar(0, [(snd1+snd2).dup] * amp * env);
 }).add;
 /////////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\pronoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1100, width =
-	0.15,
-	detune = 1.005, preamp = 4|
-	var sig,
+SynthDef(\pronoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, width =
+	0.15, detune = 1.005, preamp = 4|
+	var sig, sig2,
 	env = Env.adsr(0.01, 0.3, 0.4, 0.1);
 	freq = Lag.kr(freq, slideTime);
-	sig = Mix(VarSaw.ar([freq, freq * detune], 0, width, preamp)).distort * amp
-	* EnvGen.kr(env, gate, doneAction: 2);
-	sig = LPF.ar(sig, ffreq);
-	Out.ar(0, sig ! 2)
+	sig = Mix(VarSaw.ar([freq, freq * detune/freq*pi], 0, width, preamp)).distort * amp * EnvGen.kr(env, gate, doneAction: 2);
+	sig2 = SinOsc.ar(SinOsc.ar(XLine.kr(1, 10, freq*2), 0, 200, 800), 0, 0.25)/8;
+	sig = LPF.ar(sig, freq);
+
+	Out.ar(0, [sig + sig2] ! 2)
 }).add;
 /////////////////////////////////////////////////////////////////////////////////////////////
 SynthDef(\oxynoia, { |out, freq = 440, gate = 0.5, plfofreq = 6, mw = 0, ffreq =
@@ -48,7 +48,7 @@ SynthDef(\oxynoia, { |out, freq = 440, gate = 0.5, plfofreq = 6, mw = 0, ffreq =
 	Out.ar(out, sig ! 2)
 }).add;
 ///////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\epinoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1100, width =
+SynthDef(\amvlinoia, { |freq = 440, gate = 1, amp = 1, slideTime = 0.17, ffreq = 1100, width =
 	0.15, detune = 1.005, preamp = 4, mod = 5, phase = 0|
 	var sig, dseq, trig, out, env;
 	env = Env.adsr(0.01, 0.3, 0.4, 0.1);
@@ -106,12 +106,12 @@ SynthDef(\krypsinoia, { | phase = 0, amp = 1, freq = 300, gate = 1, mod = 5 |
 }).add;
 
 //////////////////////////////////////////////////////////////////////////////////////////////
-SynthDef(\amvlinoia, { | freq = 261, tone = 3, art = 1, amp = 1, gate = 1, mod = 5, phase = 0 |
+SynthDef(\epinoia, { | freq = 261, tone = 3, art = 1, amp = 1, gate = 1, mod = 5, phase = 0 |
 	var env, out, dseq, trig;
 	env = EnvGen.ar(Env.adsr, gate, doneAction: 2) * amp;
 	trig = Impulse.ar(freq/2, phase, amp);
 	dseq = Dseq([(freq/100), (freq/200), (freq/300), (freq/400)], inf);
-	out = PMOsc.ar(freq, mod * freq)  * (SinOsc.ar((Demand.ar(trig, 0, dseq)), phase, amp));
+	out = PMOsc.ar(freq, mod * freq)  * (Saw.ar((Demand.ar(trig, 0, dseq)), amp));
 	Out.ar(0, out * env * 1.5);
 }).add;
 //////////////////////////////////////////////////////////////////////////////////////////////
